@@ -1,15 +1,65 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { Coffee, Car, ShoppingBag, Zap, Clapperboard, LayoutGrid } from 'lucide-react';
+import { TrendingUp, Building, Zap, Receipt, LayoutGrid, PieChart } from 'lucide-react';
 
 ChartJS.register(ArcElement, Tooltip);
 
-const SpendingOverview = () => {
+export const baseCategories = [
+  { id: 'promotion', name: 'PROMOTION', percent: 40, icon: <TrendingUp size={22} />, color: '#1ab07e' },
+  { id: 'rent', name: 'RENT', percent: 30, icon: <Building size={22} />, color: '#2a6ee5' },
+  { id: 'wns', name: 'WNS', percent: 15, icon: <Zap size={22} />, color: '#facc15' },
+  { id: 'exp', name: 'EXP', percent: 10, icon: <Receipt size={22} />, color: '#e14e65' },
+  { id: 'others', name: 'Others', percent: 5, icon: <LayoutGrid size={22} />, color: '#7f8ea3' },
+];
+
+export const getCategoryBreakdown = (categoriesData = {}, totalExpense = 0) => {
+  if (totalExpense === 0) {
+    return baseCategories.map(cat => ({ ...cat, amount: 0, percent: 0 }));
+  }
+
+  let processedCats = baseCategories.map(cat => {
+    const amount = categoriesData[cat.id] || 0;
+    const percent = Math.round((amount / totalExpense) * 100);
+    return {
+      ...cat,
+      amount,
+      percent
+    };
+  });
+
+  return processedCats.sort((a, b) => b.amount - a.amount);
+};
+
+const monthMap = {
+  'Jan': 'JANUARI',
+  'Feb': 'FEBRUARI',
+  'Mar': 'MARET',
+  'Apr': 'APRIL',
+  'May': 'MEI',
+  'Jun': 'JUNI',
+  'Jul': 'JULI',
+  'Aug': 'AGUSTUS',
+  'Sep': 'SEPTEMBER',
+  'Oct': 'OKTOBER',
+  'Nov': 'NOVEMBER',
+  'Dec': 'DESEMBER'
+};
+
+const SpendingOverview = ({ monthlyData, month = 'Jan' }) => {
+  const displayMonth = month ? (monthMap[month] || month.toUpperCase()) : 'SEMUA BULAN';
+  const totalExpense = monthlyData?.expense || 0;
+  const categoriesData = monthlyData?.categories || {};
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     cutout: '75%',
+    animation: {
+      duration: 1200,
+      easing: 'easeOutQuart',
+      animateScale: true,
+      animateRotate: true
+    },
     plugins: {
       legend: { display: false },
       tooltip: {
@@ -20,16 +70,12 @@ const SpendingOverview = () => {
     },
   };
 
-  const categories = [
-    { name: 'Food & Dining', amount: 4500000, percent: 35, icon: <Coffee size={16} />, color: '#1ab07e' },
-    { name: 'Transport', amount: 3200000, percent: 25, icon: <Car size={16} />, color: '#2a6ee5' },
-    { name: 'Shopping', amount: 2500000, percent: 20, icon: <ShoppingBag size={16} />, color: '#e14e65' },
-    { name: 'Bills & Utilities', amount: 1500000, percent: 12, icon: <Zap size={16} />, color: '#facc15' },
-    { name: 'Entertainment', amount: 800000, percent: 6, icon: <Clapperboard size={16} />, color: '#a78bfa' },
-    { name: 'Others', amount: 300000, percent: 2, icon: <LayoutGrid size={16} />, color: '#7f8ea3' },
-  ];
+  const categories = useMemo(() => {
+    return getCategoryBreakdown(categoriesData, totalExpense);
+  }, [categoriesData, totalExpense]);
 
-  const totalAmount = categories.reduce((sum, cat) => sum + cat.amount, 0);
+  const topCategory = categories[0];
+  const totalAmount = totalExpense;
 
   const data = {
     labels: categories.map(c => c.name),
@@ -45,39 +91,47 @@ const SpendingOverview = () => {
 
   return (
     <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div className="section-header" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between' }}>
-        <div>
-          <h3 className="section-title">Spending Overview</h3>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>This Month</p>
+      <div className="section-header" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '0.1rem' }}>
+            <PieChart size={20} color="var(--text-secondary)" />
+          </div>
+          <div>
+            <h3 className="section-title">Spending Overview</h3>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>{displayMonth} 2026</p>
+          </div>
         </div>
-        <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Rp {totalAmount.toLocaleString()}</div>
+        <div className="spending-total" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Rp {totalAmount.toLocaleString()}</div>
       </div>
       
       <div className="spending-overview">
-        <div className="spending-chart">
-          <div style={{ position: 'relative', width: '320px', height: '320px' }}>
+        <div className="spending-chart" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <div className="chart-container-responsive" style={{ position: 'relative', width: '100%', maxWidth: '20rem', aspectRatio: '1/1', maxHeight: '20rem' }}>
             <Doughnut data={data} options={options} />
             <div style={{ 
               position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', 
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               pointerEvents: 'none'
             }}>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Top Category</span>
-              <span style={{ fontSize: '1.1rem', fontWeight: '600', textAlign: 'center', padding: '0 10px' }}>Food & Dining</span>
+              <span className="chart-center-label" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Top Category</span>
+              <span className="chart-center-value" style={{ fontSize: '1.1rem', fontWeight: '600', textAlign: 'center', padding: '0 10px', color: topCategory?.color }}>
+                {topCategory?.name || 'N/A'}
+              </span>
             </div>
           </div>
         </div>
         
-        <div className="spending-legend">
+        <div className="spending-legend" style={{ width: '100%' }}>
           {categories.map((cat, idx) => (
-            <div key={idx} style={{ 
-              display: 'flex', alignItems: 'center', paddingBottom: '0.5rem', 
-              borderBottom: '1px solid var(--glass-border)', gap: '0.75rem' 
+            <div key={cat.id} className="legend-row" style={{ 
+              display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', alignItems: 'center', 
+              padding: '0.6rem 0', borderBottom: '1px solid var(--glass-border)', gap: '0.75rem',
+              width: '100%'
             }}>
-              <div style={{ color: cat.color }}>{cat.icon}</div>
-              <div style={{ flex: 1, fontSize: '0.85rem' }}>{cat.name}</div>
-              <div style={{ fontSize: '0.85rem', fontWeight: '500' }}>Rp {cat.amount.toLocaleString()}</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', width: '35px', textAlign: 'right' }}>{cat.percent}%</div>
+              <div style={{ color: cat.color, display: 'flex', alignItems: 'center' }}>{cat.icon}</div>
+              <div className="legend-text" style={{ fontSize: '1rem', fontWeight: '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{cat.name}</div>
+              <div className="legend-text amount" style={{ fontSize: '1rem', fontWeight: '600', whiteSpace: 'nowrap', textAlign: 'right' }}>Rp {cat.amount.toLocaleString()}</div>
+              <div className="legend-text percent" style={{ fontSize: '1rem', color: 'var(--text-secondary)', textAlign: 'right', whiteSpace: 'nowrap' }}>{cat.percent}%</div>
             </div>
           ))}
         </div>

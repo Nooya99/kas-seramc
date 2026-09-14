@@ -20,7 +20,7 @@ ChartJS.register(
   Filler
 );
 
-const LineChart = ({ theme }) => {
+const LineChart = ({ theme, monthlyDataStore }) => {
   const isLight = theme === 'light';
   const textColor = isLight ? '#64748b' : '#7f8ea3';
   const gridColor = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.05)';
@@ -65,7 +65,11 @@ const LineChart = ({ theme }) => {
           drawBorder: false,
         },
         ticks: {
-          display: false,
+          display: true,
+          color: textColor,
+          font: {
+            size: 11
+          }
         }
       },
     },
@@ -78,18 +82,22 @@ const LineChart = ({ theme }) => {
       padding: {
         top: 10,
         right: 20,
-        bottom: 10,
+        bottom: 0,
         left: 10
       }
     }
   };
 
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const incomeData = months.map(m => monthlyDataStore?.[m]?.income || 0);
+  const expenseData = months.map(m => monthlyDataStore?.[m]?.expense || 0);
+
   const data = {
-    labels: ["Jan '26", "Feb '26", "Mar '26", "Apr '26", "May '26", "Jun '26", "Jul '26", "Aug '26", "Sep '26", "Oct '26", "Nov '26", "Dec '26"],
+    labels: months,
     datasets: [
       {
         label: 'Income',
-        data: [25000000, 32000000, 15000000, 42000000, 28000000, 18000000, 35000000, 48000000, 29000000, 12000000, 38000000, 55000000],
+        data: incomeData,
         borderColor: '#1ab07e',
         backgroundColor: 'rgba(26, 176, 126, 0.15)',
         borderWidth: 2,
@@ -103,7 +111,7 @@ const LineChart = ({ theme }) => {
       },
       {
         label: 'Expense',
-        data: [18000000, 21000000, 22000000, 30000000, 26000000, 12000000, 40000000, 32000000, 21000000, 19000000, 27000000, 42000000],
+        data: expenseData,
         borderColor: '#e14e65',
         backgroundColor: 'rgba(225, 78, 101, 0.15)',
         borderWidth: 2,
@@ -119,7 +127,7 @@ const LineChart = ({ theme }) => {
   };
 
   return (
-    <div className="glass-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <div className="glass-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', paddingBottom: '0.5rem' }}>
       <div className="section-title-container" style={{ marginBottom: '1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <LineChartIcon size={16} color="#7f8ea3" />

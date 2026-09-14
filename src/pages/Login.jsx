@@ -13,6 +13,7 @@ const Login = ({ setIsLoggedIn }) => {
     
     if (username === 'adminsera' && password === 'GKFRN5STAFF') {
       localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('username', username);
       setIsLoggedIn(true);
       navigate('/');
     } else {

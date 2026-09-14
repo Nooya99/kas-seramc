@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const MonthDial = ({ selectedMonth, onMonthChange }) => {
@@ -108,58 +108,81 @@ const MonthDial = ({ selectedMonth, onMonthChange }) => {
     }
   };
 
+  const handlePrevMonth = () => {
+    const idx = months.indexOf(selectedMonth);
+    const newIdx = idx > 0 ? idx - 1 : 11;
+    onMonthChange(months[newIdx]);
+  };
+
+  const handleNextMonth = () => {
+    const idx = months.indexOf(selectedMonth);
+    const newIdx = idx < 11 ? idx + 1 : 0;
+    onMonthChange(months[newIdx]);
+  };
+
   return (
     <div className="glass-card dial-card">
-      <div className="dial-container">
-        {/* The pointer at the top */}
-        <div className="dial-indicator"></div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', gap: '1.5rem' }}>
+        <button className="mobile-dial-btn prev" onClick={handlePrevMonth} title="Previous Month">
+          <ChevronLeft size={24} />
+        </button>
         
-        {/* The rotating dial */}
-        <div 
-          className="month-dial" 
-          ref={dialRef}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
-          style={{ 
-            transform: `rotate(${rotation}deg)`,
-            transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            touchAction: 'none' // Prevent scrolling while rotating on mobile
-          }}
-        >
-          <div 
-            className="dial-center-knob" 
-            onPointerDown={resetToCurrentMonth}
-            style={{ cursor: 'pointer', zIndex: 10 }}
-            title="Reset to current month"
-          >
-             {/* Small visual dots on the knob to make it look spinnable */}
-             <div className="knob-dot top"></div>
-             <div className="knob-dot bottom"></div>
-             <div className="knob-dot left"></div>
-             <div className="knob-dot right"></div>
-          </div>
+        <div className="dial-container">
+          {/* The pointer at the top */}
+          <div className="dial-indicator"></div>
           
-          {months.map((month, i) => {
-            const angle = i * 30;
-            return (
-              <div 
-                key={month} 
-                className="month-label-container"
-                style={{ transform: `rotate(${angle}deg)` }}
-              >
+          {/* The rotating dial */}
+          <div 
+            className="month-dial" 
+            ref={dialRef}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            style={{ 
+              transform: `rotate(${rotation}deg)`,
+              transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              touchAction: 'none' // Prevent scrolling while rotating on mobile
+            }}
+          >
+            <div 
+              className="dial-center-knob" 
+              onClick={resetToCurrentMonth}
+              onPointerDown={(e) => e.stopPropagation()}
+              style={{ cursor: 'pointer', zIndex: 10 }}
+              title="Reset to current month"
+            >
+               {/* Small visual dots on the knob to make it look spinnable */}
+               <div className="knob-dot top"></div>
+               <div className="knob-dot bottom"></div>
+               <div className="knob-dot left"></div>
+               <div className="knob-dot right"></div>
+            </div>
+            
+            {months.map((month, i) => {
+              const angle = i * 30;
+              return (
                 <div 
-                  className={`month-label ${selectedMonth === month ? 'active' : ''}`}
-                  // Counter-rotate the text so it stays upright
-                  style={{ transform: `rotate(${-angle - rotation}deg)` }}
+                  key={month} 
+                  className="month-label-container"
+                  style={{ transform: `rotate(${angle}deg)` }}
                 >
-                  {month}
+                  <div 
+                    className={`month-label ${selectedMonth === month ? 'active' : ''}`}
+                    // Counter-rotate the text so it stays upright
+                    style={{ transform: `rotate(${-angle - rotation}deg)` }}
+                  >
+                    {month}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+
+        <button className="mobile-dial-btn next" onClick={handleNextMonth} title="Next Month">
+          <ChevronRight size={24} />
+        </button>
       </div>
     </div>
   );
