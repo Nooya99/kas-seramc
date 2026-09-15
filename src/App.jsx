@@ -11,7 +11,7 @@ import Login from './pages/Login'
 
 const monthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-function Dashboard() {
+function Dashboard({ setIsLoggedIn }) {
   const currentMonthIndex = new Date().getMonth();
   const [selectedMonth, setSelectedMonth] = useState(monthsList[currentMonthIndex]); // Default to real current month
   const [transactions, setTransactions] = useState([]);
@@ -134,6 +134,17 @@ function Dashboard() {
       </div>
 
       <button 
+        className="logout-btn"
+        onClick={() => {
+          localStorage.removeItem('isLoggedIn');
+          setIsLoggedIn(false);
+        }}
+        title="Logout"
+      >
+        🚪
+      </button>
+
+      <button 
         className="theme-toggle-btn"
         onClick={(e) => {
           toggleTheme();
@@ -163,7 +174,7 @@ function App() {
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         <Route 
           path="/" 
-          element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />} 
+          element={isLoggedIn ? <Dashboard setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} 
         />
       </Routes>
     </Router>

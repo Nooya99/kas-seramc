@@ -133,6 +133,41 @@ body::before {
   pointer-events: none;
 }
 
+.logout-btn {
+  position: fixed;
+  bottom: 5.5rem;
+  left: -1.5rem;
+  z-index: 1000;
+  background: var(--glass-bg-1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-left: none;
+  border-radius: 0 1.25rem 1.25rem 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.3rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  opacity: 0.5;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 2px 4px 10px var(--glass-shadow-outer);
+  font-size: 1.1rem;
+}
+
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active {
+  left: 0;
+  opacity: 1;
+  padding-right: 0.65rem;
+  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+  background: var(--glass-bg-2);
+}
+
 .theme-toggle-btn {
   position: fixed;
   bottom: 2rem;
