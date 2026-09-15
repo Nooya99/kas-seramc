@@ -76,6 +76,24 @@ app.delete('/api/transactions/:id', async (req, res) => {
   }
 });
 
+// Get top buyers
+app.get('/api/top-buyers', async (req, res) => {
+  try {
+    const [rows] = await pool.query(`
+      SELECT u.ign as name, SUM(o.totalAmount) as value
+      FROM seramc_db.\`Order\` o
+      JOIN seramc_db.\`User\` u ON o.userId = u.id
+      WHERE o.status = 'PAID'
+      GROUP BY u.ign
+      ORDER BY value DESC
+      LIMIT 5
+    `);
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

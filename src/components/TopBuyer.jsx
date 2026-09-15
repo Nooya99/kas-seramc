@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, ArrowRight } from 'lucide-react';
 
 const TopBuyer = () => {
-  const buyers = [];
+  const [buyers, setBuyers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://103.89.1.229:3001/api/top-buyers')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          // Format value as IDR
+          const formattedData = data.map(b => ({
+            name: b.name || 'Unknown',
+            value: `Rp ${Number(b.value).toLocaleString('id-ID')}`
+          }));
+          setBuyers(formattedData);
+        }
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch top buyers:', err);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <div className="glass-card">
@@ -16,7 +37,11 @@ const TopBuyer = () => {
         <a href="#" className="link-all">Lihat Semua <ArrowRight size={14} /></a>
       </div>
       <div className="list-container">
-        {buyers.length === 0 ? (
+        {isLoading ? (
+          <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+            Memuat data...
+          </div>
+        ) : buyers.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
             Belum ada data
           </div>
