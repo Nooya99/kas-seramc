@@ -11,7 +11,12 @@ const Login = ({ setIsLoggedIn }) => {
     e.preventDefault();
     setError('');
     
-    if (username === 'adminsera' && password === 'GKFRN5STAFF') {
+    const allowedUsers = ['Nooya99', 'KSprint', 'Finn', 'kira', 'GreenCraftH'];
+    const allowedPassword = 'KasGkfrn5staff';
+
+    // Case-insensitive check for usernames can be done, but the user explicitly gave cases. 
+    // Usually it's better to match case-insensitively or exactly. Let's do exact match as requested.
+    if (allowedUsers.includes(username) && password === allowedPassword) {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('username', username);
       setIsLoggedIn(true);
