@@ -49,6 +49,78 @@ const Login = ({ setIsLoggedIn }) => {
           .spin-animation { animation: spin 1s linear infinite; } 
           @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
           
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          
+          .animate-item-1 { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+          .animate-item-2 { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; opacity: 0; }
+          .animate-item-3 { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; opacity: 0; }
+          .animate-item-4 { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; opacity: 0; }
+          .animate-item-5 { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; opacity: 0; }
+          
+          .custom-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #fff;
+            user-select: none;
+          }
+          .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+          }
+          .checkmark {
+            height: 18px;
+            width: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+          }
+          .custom-checkbox:hover input ~ .checkmark {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+          }
+          .custom-checkbox input:checked ~ .checkmark {
+            background: rgba(16, 185, 129, 0.8);
+            border-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            transform: scale(1);
+          }
+          .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 5px;
+            top: 2px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            animation: checkAnim 0.2s forwards;
+          }
+          @keyframes checkAnim {
+            0% { height: 0; width: 0; opacity: 0; }
+            100% { height: 8px; width: 4px; opacity: 1; }
+          }
+          .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+          }
+          
           .glass-login-btn {
             background: rgba(16, 185, 129, 0.25);
             backdrop-filter: blur(10px);
@@ -69,7 +141,7 @@ const Login = ({ setIsLoggedIn }) => {
       </style>
       <div className="auth-container">
         <div className="glass-card auth-card" style={{ maxWidth: '24rem', padding: '3rem 2.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div className="animate-item-1" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
             <img 
               src="/serashop.png" 
               alt="SERAMC Logo" 
@@ -99,7 +171,7 @@ const Login = ({ setIsLoggedIn }) => {
           )}
           
           <form onSubmit={handleLogin} className="auth-form" style={{ gap: '1rem' }}>
-            <div className="form-group" style={{ position: 'relative' }}>
+            <div className="form-group animate-item-2" style={{ position: 'relative' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Username</label>
               <div style={{ position: 'relative' }}>
                 <User size={18} color="#7f8ea3" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
@@ -115,7 +187,7 @@ const Login = ({ setIsLoggedIn }) => {
               </div>
             </div>
             
-            <div className="form-group" style={{ position: 'relative' }}>
+            <div className="form-group animate-item-3" style={{ position: 'relative' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Password</label>
               <div style={{ position: 'relative' }}>
                 <Lock size={18} color="#7f8ea3" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
@@ -131,21 +203,22 @@ const Login = ({ setIsLoggedIn }) => {
               </div>
             </div>
             
-            <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginTop: '-0.5rem', marginBottom: '0.5rem' }}>
-              <input 
-                type="checkbox" 
-                id="remember" 
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                disabled={isLoading}
-                style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: '#10b981' }}
-              />
-              <label htmlFor="remember" style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', cursor: 'pointer' }}>Remember me</label>
+            <div className="form-group animate-item-4" style={{ marginTop: '0.2rem', marginBottom: '0.8rem' }}>
+              <label className="custom-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  disabled={isLoading}
+                />
+                <span className="checkmark"></span>
+                Remember me
+              </label>
             </div>
             
             <button 
               type="submit" 
-              className="auth-btn glass-login-btn" 
+              className="auth-btn glass-login-btn animate-item-5" 
               disabled={isLoading}
               style={{ 
                 marginTop: '0.5rem', 
