@@ -123,38 +123,61 @@ const Login = ({ setIsLoggedIn }) => {
           
           .glass-input {
             width: 100%;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
             color: #ffffff;
-            padding: 12px 12px 12px 40px;
+            padding: 14px 16px 14px 44px;
+            box-shadow: 
+              0 4px 12px rgba(0, 0, 0, 0.1),
+              inset 0 2px 4px rgba(255, 255, 255, 0.1),
+              inset 0 -2px 4px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             transition: all 0.3s ease;
           }
           .glass-input::placeholder {
             color: rgba(255, 255, 255, 0.7);
           }
           .glass-input:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 
+              0 0 15px rgba(255, 255, 255, 0.2),
+              inset 0 2px 4px rgba(255, 255, 255, 0.2);
             outline: none;
           }
           
           .glass-login-btn {
-            background: rgba(16, 185, 129, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+            background: rgba(147, 197, 253, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 9999px;
+            color: #0f172a;
+            box-shadow: 
+              0 8px 24px rgba(0, 0, 0, 0.2),
+              inset 0 4px 8px rgba(255, 255, 255, 0.6),
+              inset 0 -4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
           }
           .glass-login-btn:hover:not(:disabled) {
-            background: rgba(16, 185, 129, 0.4);
-            border: 1px solid rgba(16, 185, 129, 0.6);
+            background: rgba(147, 197, 253, 0.55);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            box-shadow: 
+              0 12px 28px rgba(0, 0, 0, 0.25),
+              inset 0 4px 8px rgba(255, 255, 255, 0.7),
+              inset 0 -4px 8px rgba(0, 0, 0, 0.1);
           }
           .glass-login-btn:active:not(:disabled) {
-            transform: translateY(0);
+            transform: translateY(1px);
+            box-shadow: 
+              0 4px 12px rgba(0, 0, 0, 0.2),
+              inset 0 2px 4px rgba(255, 255, 255, 0.4),
+              inset 0 -2px 4px rgba(0, 0, 0, 0.1);
           }
         `}
       </style>
@@ -241,16 +264,14 @@ const Login = ({ setIsLoggedIn }) => {
               disabled={isLoading}
               style={{ 
                 marginTop: '0.5rem', 
-                padding: '12px', 
+                padding: '14px', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center', 
                 gap: '8px',
-                borderRadius: '8px',
-                color: '#fff',
                 fontWeight: '600',
+                fontSize: '1rem',
                 cursor: isLoading ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s ease'
               }}
             >
               {isLoading ? (
