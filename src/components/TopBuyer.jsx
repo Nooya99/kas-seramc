@@ -17,7 +17,8 @@ const TopBuyer = () => {
         if (Array.isArray(data)) {
           const formattedData = data.map(b => ({
             name: b.name || 'Unknown',
-            value: `Rp ${Number(b.value).toLocaleString('id-ID')}`
+            value: `Rp ${Number(b.value).toLocaleString('id-ID')}`,
+            rawValue: Number(b.value)
           }));
           setBuyers(formattedData);
         }
@@ -40,7 +41,8 @@ const TopBuyer = () => {
         if (Array.isArray(data)) {
           const formattedData = data.map(b => ({
             name: b.name || 'Unknown',
-            value: `Rp ${Number(b.value).toLocaleString('id-ID')}`
+            value: `Rp ${Number(b.value).toLocaleString('id-ID')}`,
+            rawValue: Number(b.value)
           }));
           setAllBuyers(formattedData);
         }
@@ -76,6 +78,8 @@ const TopBuyer = () => {
     buyer.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const totalAllTransactions = allBuyers.reduce((sum, buyer) => sum + (buyer.rawValue || 0), 0);
+
   return (
     <>
       <div className="glass-card">
@@ -106,8 +110,15 @@ const TopBuyer = () => {
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '500px' }}>
-            <div className="modal-header" style={{ marginBottom: '1rem' }}>
-              <h3 className="modal-title">Semua Top Buyer</h3>
+            <div className="modal-header" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <h3 className="modal-title" style={{ margin: 0 }}>Semua Top Buyer</h3>
+                {!isLoadingAll && allBuyers.length > 0 && (
+                  <span style={{ fontSize: '0.9rem', color: 'var(--accent-green)', fontWeight: '600', backgroundColor: 'rgba(34, 197, 94, 0.1)', padding: '2px 8px', borderRadius: '12px' }}>
+                    Total: Rp {totalAllTransactions.toLocaleString('id-ID')}
+                  </span>
+                )}
+              </div>
               <button className="modal-close" onClick={() => setShowModal(false)}>
                 <X size={20} />
               </button>
