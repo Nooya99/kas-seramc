@@ -34,15 +34,15 @@
   --box-red: rgba(225, 78, 101, 0.25);
   
   /* Bubble Glass - Light */
-  --glass-bg-1: rgba(255, 255, 255, 0.25);
-  --glass-bg-2: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-shadow-outer: rgba(0, 0, 0, 0.05);
-  --glass-highlight: rgba(255, 255, 255, 0.5);
-  --glass-shadow-inner: rgba(0, 0, 0, 0.05);
-  --watermark-opacity: 0.85;
+  --glass-bg-1: rgba(255, 255, 255, 0.4);
+  --glass-bg-2: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow-outer: rgba(0, 0, 0, 0.15);
+  --glass-highlight: rgba(255, 255, 255, 0.7);
+  --glass-shadow-inner: rgba(0, 0, 0, 0.1);
+  --watermark-opacity: 0.2;
   --active-text: #0f172a;
-  --active-text-glow: rgba(0, 0, 0, 0.2);
+  --active-text-glow: rgba(0, 0, 0, 0.25);
 }
 
 html {
