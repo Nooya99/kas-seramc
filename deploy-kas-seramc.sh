@@ -4,10 +4,9 @@ echo "=== Memulai Deployment kas-seramc ==="
 # Masuk ke folder proyek
 cd ~/kas-seramc || exit
 
-# Buang perubahan lokal yang mungkin menyangkut
-git reset --hard origin/main
-
 # Tarik update terbaru dari GitHub
+git fetch origin main
+git reset --hard origin/main
 git pull origin main
 
 # Matikan dan build ulang Docker container
