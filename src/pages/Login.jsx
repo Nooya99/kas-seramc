@@ -38,6 +38,23 @@ const Login = ({ setIsLoggedIn }) => {
         {`
           .spin-animation { animation: spin 1s linear infinite; } 
           @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+          
+          .glass-login-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          }
+          .glass-login-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+          }
+          .glass-login-btn:active:not(:disabled) {
+            transform: translateY(0);
+          }
         `}
       </style>
       <div className="auth-container">
@@ -106,7 +123,7 @@ const Login = ({ setIsLoggedIn }) => {
             
             <button 
               type="submit" 
-              className="auth-btn" 
+              className="auth-btn glass-login-btn" 
               disabled={isLoading}
               style={{ 
                 marginTop: '0.5rem', 
@@ -115,8 +132,6 @@ const Login = ({ setIsLoggedIn }) => {
                 alignItems: 'center', 
                 justifyContent: 'center', 
                 gap: '8px',
-                background: isLoading ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                border: 'none',
                 borderRadius: '8px',
                 color: '#fff',
                 fontWeight: '600',
