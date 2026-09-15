@@ -11,7 +11,7 @@ const TopBuyer = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetch('http://103.89.1.229:3001/api/top-buyers')
+    fetch('/api/top-buyers')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -35,7 +35,7 @@ const TopBuyer = () => {
     setShowModal(true);
     setSearchTerm(''); // Reset search when opening
     setIsLoadingAll(true);
-    fetch('http://103.89.1.229:3001/api/top-buyers?limit=all')
+    fetch('/api/top-buyers?limit=all')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {

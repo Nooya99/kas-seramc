@@ -18,7 +18,7 @@ function Dashboard({ setIsLoggedIn }) {
   const [transactions, setTransactions] = useState([]);
   
   React.useEffect(() => {
-    fetch('http://103.89.1.229:3001/api/transactions')
+    fetch('/api/transactions')
       .then(res => res.json())
       .then(data => {
         if(Array.isArray(data)) setTransactions(data);
@@ -105,7 +105,7 @@ function Dashboard({ setIsLoggedIn }) {
               // Optimistic Update: Langsung tampilkan di UI tanpa menunggu respon server
               setTransactions([newTxn, ...transactions]);
               
-              fetch('http://103.89.1.229:3001/api/transactions', {
+              fetch('/api/transactions', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newTxn)
@@ -127,7 +127,7 @@ function Dashboard({ setIsLoggedIn }) {
           onUpdate={(id, updatedTxn) => setTransactions(transactions.map(t => t.id === id ? updatedTxn : t))}
           onDelete={(id) => {
             setTransactions(transactions.filter(t => t.id !== id));
-            fetch(`http://103.89.1.229:3001/api/transactions/${id}`, {
+            fetch(`/api/transactions/${id}`, {
               method: 'DELETE'
             }).catch(err => console.error('Failed to delete from DB:', err));
           }}
