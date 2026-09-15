@@ -86,7 +86,7 @@ app.get('/api/top-buyers', async (req, res) => {
       WHERE o.status = 'PAID'
       GROUP BY u.ign
       ORDER BY value DESC
-      LIMIT 5
+      LIMIT 10
     `);
     res.json(rows);
   } catch (error) {
