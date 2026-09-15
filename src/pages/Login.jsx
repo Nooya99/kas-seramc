@@ -80,7 +80,7 @@ const Login = ({ setIsLoggedIn }) => {
                   type="text" 
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter authorized username" 
+                  placeholder="Enter username" 
                   required 
                   disabled={isLoading}
                   style={{ width: '100%', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'inherit', padding: '12px 12px 12px 40px' }}
@@ -96,7 +96,7 @@ const Login = ({ setIsLoggedIn }) => {
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter master password" 
+                  placeholder="Enter password" 
                   required 
                   disabled={isLoading}
                   style={{ width: '100%', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'inherit', padding: '12px 12px 12px 40px' }}
