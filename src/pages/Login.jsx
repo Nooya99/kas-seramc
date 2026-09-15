@@ -40,17 +40,17 @@ const Login = ({ setIsLoggedIn }) => {
           @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
           
           .glass-login-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(16, 185, 129, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
           }
           .glass-login-btn:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(16, 185, 129, 0.4);
+            border: 1px solid rgba(16, 185, 129, 0.6);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
           }
           .glass-login-btn:active:not(:disabled) {
             transform: translateY(0);
