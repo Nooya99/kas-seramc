@@ -11,44 +11,19 @@ import Login from './pages/Login'
 
 const monthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const generateDummyData = () => {
-  const data = [];
-  const categories = ['promotion', 'rent', 'wns', 'exp', 'others'];
-  for (let month = 0; month < 12; month++) {
-    // Generate Income
-    data.push({
-      id: `inc-${month}`,
-      type: 'income',
-      name: 'Pendapatan Bulanan',
-      date: `2026-${String(month + 1).padStart(2, '0')}-01`,
-      category: 'revenue',
-      amount: Math.floor(Math.random() * 20000000) + 30000000, // 30M - 50M
-      description: 'Pendapatan utama bulan ini'
-    });
-    
-    // Generate >20 expenses per month
-    const numExpenses = Math.floor(Math.random() * 6) + 21; // 21 - 26 expenses
-    for (let i = 0; i < numExpenses; i++) {
-      const cat = categories[Math.floor(Math.random() * categories.length)];
-      data.push({
-        id: `exp-${month}-${i}`,
-        type: 'expense',
-        name: `Biaya ${cat.toUpperCase()}`,
-        date: `2026-${String(month + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
-        category: cat,
-        amount: Math.floor(Math.random() * 5000000) + 1000000, // 1M - 6M
-        description: `Biaya operasional untuk ${cat} bulan ${monthsList[month]}`
-      });
-    }
-  }
-  // Sort descending by date so newer ones are at the top
-  return data.sort((a, b) => new Date(b.date) - new Date(a.date));
-};
-
 function Dashboard() {
   const currentMonthIndex = new Date().getMonth();
   const [selectedMonth, setSelectedMonth] = useState(monthsList[currentMonthIndex]); // Default to real current month
-  const [transactions, setTransactions] = useState(generateDummyData());
+  const [transactions, setTransactions] = useState([]);
+  
+  React.useEffect(() => {
+    fetch('http://localhost:3001/api/transactions')
+      .then(res => res.json())
+      .then(data => {
+        if(Array.isArray(data)) setTransactions(data);
+      })
+      .catch(err => console.error('Error fetching transactions:', err));
+  }, []);
   
   const monthlyDataStore = React.useMemo(() => {
     const store = {};
@@ -82,7 +57,7 @@ function Dashboard() {
 
     return store;
   }, [transactions]);
-  const username = localStorage.getItem('username') || 'ADMIN';
+
   
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'dark';
@@ -123,7 +98,19 @@ function Dashboard() {
             <LineChart theme={theme} monthlyDataStore={monthlyDataStore} />
           </div>
           <div className="sidebar-widget">
-            <QuickActions onAddTransaction={(txn) => setTransactions([{ ...txn, id: Date.now().toString() + Math.random().toString(36).substr(2, 5) }, ...transactions])} />
+            <QuickActions onAddTransaction={(txn) => {
+              const newTxn = { ...txn, id: Date.now().toString() + Math.random().toString(36).substring(2, 7) };
+              fetch('http://localhost:3001/api/transactions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newTxn)
+              })
+              .then(() => setTransactions([newTxn, ...transactions]))
+              .catch(err => {
+                console.error('Failed to save to DB, updating locally only', err);
+                setTransactions([newTxn, ...transactions]);
+              });
+            }} />
           </div>
         </div>
       </div>
