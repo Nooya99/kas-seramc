@@ -124,7 +124,12 @@ function Dashboard() {
           transactions={transactions} 
           selectedMonth={selectedMonth}
           onUpdate={(id, updatedTxn) => setTransactions(transactions.map(t => t.id === id ? updatedTxn : t))}
-          onDelete={(id) => setTransactions(transactions.filter(t => t.id !== id))}
+          onDelete={(id) => {
+            setTransactions(transactions.filter(t => t.id !== id));
+            fetch(`http://103.89.1.229:3001/api/transactions/${id}`, {
+              method: 'DELETE'
+            }).catch(err => console.error('Failed to delete from DB:', err));
+          }}
         />
       </div>
 

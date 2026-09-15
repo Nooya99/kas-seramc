@@ -63,6 +63,19 @@ app.post('/api/transactions', async (req, res) => {
   }
 });
 
+// Delete a transaction
+app.delete('/api/transactions/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    // We attempt to delete from both tables since the ID is unique
+    await pool.query('DELETE FROM incomes WHERE id = ?', [id]);
+    await pool.query('DELETE FROM expenses WHERE id = ?', [id]);
+    res.json({ message: 'Transaction deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
