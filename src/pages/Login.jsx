@@ -131,7 +131,7 @@ const Login = ({ setIsLoggedIn }) => {
                 </>
               ) : (
                 <>
-                  <span>Secure Sign In</span>
+                  <span>LOGIN</span>
                   <ArrowRight size={18} />
                 </>
               )}
