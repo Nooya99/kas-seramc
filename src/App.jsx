@@ -100,15 +100,17 @@ function Dashboard() {
           <div className="sidebar-widget">
             <QuickActions onAddTransaction={(txn) => {
               const newTxn = { ...txn, id: Date.now().toString() + Math.random().toString(36).substring(2, 7) };
+              
+              // Optimistic Update: Langsung tampilkan di UI tanpa menunggu respon server
+              setTransactions([newTxn, ...transactions]);
+              
               fetch('http://103.89.1.229:3001/api/transactions', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newTxn)
-              })
-              .then(() => setTransactions([newTxn, ...transactions]))
-              .catch(err => {
-                console.error('Failed to save to DB, updating locally only', err);
-                setTransactions([newTxn, ...transactions]);
+              }).catch(err => {
+                console.error('Failed to save to DB', err);
+                // Jika butuh lebih aman, bisa kembalikan state jika gagal
               });
             }} />
           </div>
