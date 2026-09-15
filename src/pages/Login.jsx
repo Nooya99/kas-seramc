@@ -73,7 +73,7 @@ const Login = ({ setIsLoggedIn }) => {
           
           <form onSubmit={handleLogin} className="auth-form" style={{ gap: '1.5rem' }}>
             <div className="form-group" style={{ position: 'relative' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: 'var(--text-secondary)' }}>Username</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Username</label>
               <div style={{ position: 'relative' }}>
                 <User size={18} color="#7f8ea3" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input 
@@ -89,7 +89,7 @@ const Login = ({ setIsLoggedIn }) => {
             </div>
             
             <div className="form-group" style={{ position: 'relative' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: 'var(--text-secondary)' }}>Password</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Password</label>
               <div style={{ position: 'relative' }}>
                 <Lock size={18} color="#7f8ea3" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input 
