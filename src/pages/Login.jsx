@@ -42,16 +42,13 @@ const Login = ({ setIsLoggedIn }) => {
       </style>
       <div className="auth-container">
         <div className="glass-card auth-card" style={{ maxWidth: '24rem', padding: '3rem 2.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
             <img 
               src="/serashop.png" 
               alt="SERAMC Logo" 
               style={{ width: '280px', height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))' }} 
             />
           </div>
-          
-          <h2 className="auth-title" style={{ fontSize: '1.6rem', textAlign: 'center', letterSpacing: '1px' }}>SERAMC SECURE</h2>
-          <p className="auth-subtitle" style={{ marginBottom: '2.5rem', opacity: '0.8' }}>Authorized Personnel Only</p>
           
           {error && (
             <div style={{ 
