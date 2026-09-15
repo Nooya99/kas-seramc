@@ -138,6 +138,7 @@ function Dashboard({ setIsLoggedIn }) {
         className="logout-btn"
         onClick={() => {
           localStorage.removeItem('isLoggedIn');
+          sessionStorage.removeItem('isLoggedIn');
           setIsLoggedIn(false);
         }}
         title="Logout"
@@ -166,7 +167,7 @@ function Dashboard({ setIsLoggedIn }) {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true';
+    return localStorage.getItem('isLoggedIn') === 'true' || sessionStorage.getItem('isLoggedIn') === 'true';
   });
 
   return (

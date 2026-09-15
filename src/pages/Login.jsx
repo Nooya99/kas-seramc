@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { User, Lock, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
 
 const Login = ({ setIsLoggedIn }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState(localStorage.getItem('savedUsername') || '');
+  const [password, setPassword] = useState(localStorage.getItem('savedPassword') || '');
+  const [rememberMe, setRememberMe] = useState(!!localStorage.getItem('savedUsername'));
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +22,16 @@ const Login = ({ setIsLoggedIn }) => {
 
       // Exact case-sensitive match
       if (allowedUsers.includes(username) && password === allowedPassword) {
-        localStorage.setItem('isLoggedIn', 'true');
+        if (rememberMe) {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('savedUsername', username);
+          localStorage.setItem('savedPassword', password);
+        } else {
+          sessionStorage.setItem('isLoggedIn', 'true');
+          localStorage.removeItem('isLoggedIn'); // ensure it's not in local
+          localStorage.removeItem('savedUsername');
+          localStorage.removeItem('savedPassword');
+        }
         localStorage.setItem('username', username);
         setIsLoggedIn(true);
         navigate('/');
@@ -119,6 +129,18 @@ const Login = ({ setIsLoggedIn }) => {
                   style={{ width: '100%', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'inherit', padding: '12px 12px 12px 40px' }}
                 />
               </div>
+            </div>
+            
+            <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginTop: '-0.5rem', marginBottom: '0.5rem' }}>
+              <input 
+                type="checkbox" 
+                id="remember" 
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                disabled={isLoading}
+                style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: '#10b981' }}
+              />
+              <label htmlFor="remember" style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', cursor: 'pointer' }}>Remember me</label>
             </div>
             
             <button 
