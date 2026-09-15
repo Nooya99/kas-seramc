@@ -17,7 +17,7 @@ function Dashboard() {
   const [transactions, setTransactions] = useState([]);
   
   React.useEffect(() => {
-    fetch('http://localhost:3001/api/transactions')
+    fetch('http://103.89.1.229:3001/api/transactions')
       .then(res => res.json())
       .then(data => {
         if(Array.isArray(data)) setTransactions(data);
@@ -100,7 +100,7 @@ function Dashboard() {
           <div className="sidebar-widget">
             <QuickActions onAddTransaction={(txn) => {
               const newTxn = { ...txn, id: Date.now().toString() + Math.random().toString(36).substring(2, 7) };
-              fetch('http://localhost:3001/api/transactions', {
+              fetch('http://103.89.1.229:3001/api/transactions', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newTxn)
