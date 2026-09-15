@@ -14,15 +14,15 @@
   --box-red: rgba(225, 78, 101, 0.15);
   
   /* Bubble Glass - Dark */
-  --glass-bg-1: rgba(255, 255, 255, 0.04);
-  --glass-bg-2: rgba(255, 255, 255, 0.005);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow-outer: rgba(0, 0, 0, 0.3);
-  --glass-highlight: rgba(255, 255, 255, 0.2);
-  --glass-shadow-inner: rgba(0, 0, 0, 0.2);
+  --glass-bg-1: rgba(255, 255, 255, 0.06);
+  --glass-bg-2: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow-outer: rgba(0, 0, 0, 0.2);
+  --glass-highlight: rgba(255, 255, 255, 0.3);
+  --glass-shadow-inner: rgba(0, 0, 0, 0.1);
   --watermark-opacity: 0.85;
   --active-text: #ffffff;
-  --active-text-glow: rgba(255, 255, 255, 0.5);
+  --active-text-glow: rgba(255, 255, 255, 0.6);
 }
 
 [data-theme="light"] {
@@ -216,9 +216,10 @@ body::before {
 /* Base Bubble Glass Card */
 .glass-card {
   background: var(--glass-bg-1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 1.25rem;
   padding: 1.5rem 2rem;
   box-shadow: 
@@ -234,10 +235,11 @@ body::before {
 .glass-card:hover {
   transform: translateY(-0.25rem);
   box-shadow: 
-    0 0.75rem 2.5rem 0 rgba(0, 0, 0, 0.4),
-    inset 0 0.15rem 0.6rem rgba(255, 255, 255, 0.3),
-    inset 0 -0.1rem 0.4rem rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
+    0 0.75rem 2.5rem 0 rgba(0, 0, 0, 0.3),
+    inset 0 0.15rem 0.6rem rgba(255, 255, 255, 0.4),
+    inset 0 -0.1rem 0.4rem rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  background: var(--glass-bg-2);
 }
 
 /* Summary Cards New Layout */
