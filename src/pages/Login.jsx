@@ -46,7 +46,7 @@ const Login = ({ setIsLoggedIn }) => {
             <img 
               src="/serashop.png" 
               alt="SERAMC Logo" 
-              style={{ width: '90px', height: '90px', objectFit: 'contain', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))' }} 
+              style={{ width: '130px', height: '130px', objectFit: 'contain', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))' }} 
             />
           </div>
           
