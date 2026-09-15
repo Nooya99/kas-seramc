@@ -43,9 +43,11 @@ const Login = ({ setIsLoggedIn }) => {
       <div className="auth-container">
         <div className="glass-card auth-card" style={{ maxWidth: '24rem', padding: '3rem 2.5rem' }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <div style={{ background: 'rgba(34, 197, 94, 0.15)', padding: '1rem', borderRadius: '50%' }}>
-              <ShieldCheck size={36} color="#22c55e" />
-            </div>
+            <img 
+              src="/serashop.png" 
+              alt="SERAMC Logo" 
+              style={{ width: '90px', height: '90px', objectFit: 'contain', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))' }} 
+            />
           </div>
           
           <h2 className="auth-title" style={{ fontSize: '1.6rem', textAlign: 'center', letterSpacing: '1px' }}>SERAMC SECURE</h2>
