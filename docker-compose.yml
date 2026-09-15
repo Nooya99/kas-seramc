@@ -8,25 +8,13 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - DB_HOST=mysql
-      - DB_USER=root
-      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD:-root_password_sementara}
-      - DB_NAME=kas-seramc
-    depends_on:
-      - mysql
-
-  mysql:
-    image: mysql:8.0
-    container_name: kas_seramc_mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password_sementara}
-      MYSQL_DATABASE: kas-seramc
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./server/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      # host.docker.internal allows the container to talk to the VPS host network
+      - DB_HOST=host.docker.internal
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME:-kas-seramc}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -37,6 +25,3 @@ services:
       - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
     depends_on:
       - app
-
-volumes:
-  mysql_data:
