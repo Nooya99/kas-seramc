@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, ArrowRight, X } from 'lucide-react';
+import { User, ArrowRight, X, Search } from 'lucide-react';
 
 const TopBuyer = () => {
   const [buyers, setBuyers] = useState([]);
@@ -8,6 +8,7 @@ const TopBuyer = () => {
   const [showModal, setShowModal] = useState(false);
   const [allBuyers, setAllBuyers] = useState([]);
   const [isLoadingAll, setIsLoadingAll] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetch('http://103.89.1.229:3001/api/top-buyers')
@@ -31,6 +32,7 @@ const TopBuyer = () => {
   const openModal = (e) => {
     e.preventDefault();
     setShowModal(true);
+    setSearchTerm(''); // Reset search when opening
     setIsLoadingAll(true);
     fetch('http://103.89.1.229:3001/api/top-buyers?limit=all')
       .then(res => res.json())
@@ -70,6 +72,10 @@ const TopBuyer = () => {
     });
   };
 
+  const filteredAllBuyers = allBuyers.filter(buyer => 
+    buyer.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <div className="glass-card">
@@ -100,23 +106,44 @@ const TopBuyer = () => {
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '500px' }}>
-            <div className="modal-header">
+            <div className="modal-header" style={{ marginBottom: '1rem' }}>
               <h3 className="modal-title">Semua Top Buyer</h3>
               <button className="modal-close" onClick={() => setShowModal(false)}>
                 <X size={20} />
               </button>
             </div>
-            <div style={{ maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }}>
+            
+            <div style={{ marginBottom: '1rem', position: 'relative' }}>
+              <Search size={16} color="#7f8ea3" style={{ position: 'absolute', left: '12px', top: '12px' }} />
+              <input 
+                type="text" 
+                placeholder="Cari nama pemain..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ 
+                  width: '100%', 
+                  padding: '0.6rem 0.75rem 0.6rem 2.5rem', 
+                  borderRadius: '8px', 
+                  border: '1px solid var(--glass-border)',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: 'var(--text-primary)',
+                  outline: 'none',
+                  fontSize: '0.9rem'
+                }}
+              />
+            </div>
+
+            <div style={{ maxHeight: '350px', overflowY: 'auto', paddingRight: '10px' }}>
               {isLoadingAll ? (
                 <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
                   Memuat semua data...
                 </div>
-              ) : allBuyers.length === 0 ? (
+              ) : filteredAllBuyers.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-                  Belum ada data
+                  {searchTerm ? 'Pemain tidak ditemukan' : 'Belum ada data'}
                 </div>
               ) : (
-                renderList(allBuyers)
+                renderList(filteredAllBuyers)
               )}
             </div>
           </div>
