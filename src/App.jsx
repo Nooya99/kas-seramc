@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { LogOut, User } from 'lucide-react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import SummaryCards from './components/SummaryCards'
 import SpendingOverview from './components/SpendingOverview'
@@ -141,7 +142,7 @@ function Dashboard({ setIsLoggedIn }) {
         }}
         title="Logout"
       >
-        🚪
+        <LogOut size={18} color="#ef4444" />
       </button>
 
       <button 
