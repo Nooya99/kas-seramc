@@ -59,7 +59,7 @@ const Login = ({ setIsLoggedIn }) => {
       </style>
       <div className="auth-container">
         <div className="glass-card auth-card" style={{ maxWidth: '24rem', padding: '3rem 2.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
             <img 
               src="/serashop.png" 
               alt="SERAMC Logo" 
@@ -88,7 +88,7 @@ const Login = ({ setIsLoggedIn }) => {
             </div>
           )}
           
-          <form onSubmit={handleLogin} className="auth-form" style={{ gap: '1.5rem' }}>
+          <form onSubmit={handleLogin} className="auth-form" style={{ gap: '1rem' }}>
             <div className="form-group" style={{ position: 'relative' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Username</label>
               <div style={{ position: 'relative' }}>
