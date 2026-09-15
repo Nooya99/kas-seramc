@@ -36,7 +36,12 @@ app.get('/api/test-db', async (req, res) => {
 // Get all transactions
 app.get('/api/transactions', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM transactions ORDER BY date DESC');
+    const [rows] = await pool.query(`
+      SELECT id, 'income' as type, name, date, category, amount, description FROM incomes
+      UNION ALL
+      SELECT id, 'expense' as type, name, date, category, amount, description FROM expenses
+      ORDER BY date DESC
+    `);
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -47,11 +52,12 @@ app.get('/api/transactions', async (req, res) => {
 app.post('/api/transactions', async (req, res) => {
   const { id, type, name, date, category, amount, description } = req.body;
   try {
+    const tableName = type === 'income' ? 'incomes' : 'expenses';
     const [result] = await pool.query(
-      'INSERT INTO transactions (id, type, name, date, category, amount, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [id, type, name, date, category, amount, description]
+      `INSERT INTO ${tableName} (id, name, date, category, amount, description) VALUES (?, ?, ?, ?, ?, ?)`,
+      [id, name, date, category, amount, description]
     );
-    res.status(201).json({ message: 'Transaction added successfully' });
+    res.status(201).json({ message: 'Transaction added successfully to ' + tableName });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
