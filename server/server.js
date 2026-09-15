@@ -79,6 +79,8 @@ app.delete('/api/transactions/:id', async (req, res) => {
 // Get top buyers
 app.get('/api/top-buyers', async (req, res) => {
   try {
+    const { limit } = req.query;
+    const limitClause = limit === 'all' ? '' : 'LIMIT 10';
     const [rows] = await pool.query(`
       SELECT u.ign as name, SUM(o.totalAmount) as value
       FROM seramc_db.\`Order\` o
@@ -86,7 +88,7 @@ app.get('/api/top-buyers', async (req, res) => {
       WHERE o.status = 'PAID'
       GROUP BY u.ign
       ORDER BY value DESC
-      LIMIT 10
+      ${limitClause}
     `);
     res.json(rows);
   } catch (error) {
