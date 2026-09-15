@@ -80,14 +80,16 @@ const Login = ({ setIsLoggedIn }) => {
             height: 18px;
             width: 18px;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), inset 0 -2px 4px rgba(0, 0, 0, 0.05);
           }
           .custom-checkbox:hover input ~ .checkmark {
             background: rgba(255, 255, 255, 0.1);
@@ -104,10 +106,10 @@ const Login = ({ setIsLoggedIn }) => {
             content: "";
             position: absolute;
             display: none;
-            left: 5px;
-            top: 2px;
-            width: 4px;
-            height: 8px;
+            left: 5.5px;
+            top: 3px;
+            width: 5px;
+            height: 9px;
             border: solid white;
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
@@ -115,7 +117,7 @@ const Login = ({ setIsLoggedIn }) => {
           }
           @keyframes checkAnim {
             0% { height: 0; width: 0; opacity: 0; }
-            100% { height: 8px; width: 4px; opacity: 1; }
+            100% { height: 9px; width: 5px; opacity: 1; }
           }
           .custom-checkbox input:checked ~ .checkmark:after {
             display: block;
@@ -217,7 +219,7 @@ const Login = ({ setIsLoggedIn }) => {
           
           <form onSubmit={handleLogin} className="auth-form" style={{ gap: '1rem' }}>
             <div className="form-group animate-item-2" style={{ position: 'relative' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Username</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff', display: 'block', marginBottom: '0.4rem', paddingLeft: '0.2rem' }}>Username</label>
               <div style={{ position: 'relative' }}>
                 <User size={18} color="#ffffff" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input 
@@ -233,7 +235,7 @@ const Login = ({ setIsLoggedIn }) => {
             </div>
             
             <div className="form-group animate-item-3" style={{ position: 'relative' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Password</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff', display: 'block', marginBottom: '0.4rem', paddingLeft: '0.2rem' }}>Password</label>
               <div style={{ position: 'relative' }}>
                 <Lock size={18} color="#ffffff" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input 
@@ -248,7 +250,7 @@ const Login = ({ setIsLoggedIn }) => {
               </div>
             </div>
             
-            <div className="form-group animate-item-4" style={{ marginTop: '0.2rem', marginBottom: '0.8rem' }}>
+            <div className="form-group animate-item-4" style={{ marginTop: '0.4rem', marginBottom: '0.8rem', paddingLeft: '0.2rem' }}>
               <label className="custom-checkbox">
                 <input 
                   type="checkbox" 
@@ -257,7 +259,7 @@ const Login = ({ setIsLoggedIn }) => {
                   disabled={isLoading}
                 />
                 <span className="checkmark"></span>
-                Remember me
+                <span style={{ paddingTop: '1px' }}>Remember me</span>
               </label>
             </div>
             
@@ -280,16 +282,23 @@ const Login = ({ setIsLoggedIn }) => {
                   <span>Authenticating...</span>
                 </>
               ) : (
-                <>
-                  <span>LOGIN</span>
-                  <ArrowRight size={18} />
-                </>
+                <span>LOGIN</span>
               )}
             </button>
           </form>
           
-          <div style={{ marginTop: '2.5rem', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-            <Lock size={12} /> Restricted Access • Server-side encrypted connection
+          <div className="animate-item-5" style={{ 
+            marginTop: '2rem', 
+            textAlign: 'center', 
+            fontSize: '0.75rem', 
+            color: 'rgba(255, 255, 255, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px'
+          }}>
+            <ShieldCheck size={14} opacity={0.6} />
+            <span>Restricted Access &bull; Server-side encrypted connection</span>
           </div>
         </div>
       </div>
