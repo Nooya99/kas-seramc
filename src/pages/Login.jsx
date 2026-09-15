@@ -121,6 +121,25 @@ const Login = ({ setIsLoggedIn }) => {
             display: block;
           }
           
+          .glass-input {
+            width: 100%;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            padding: 12px 12px 12px 40px;
+            transition: all 0.3s ease;
+          }
+          .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+          }
+          .glass-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+            outline: none;
+          }
+          
           .glass-login-btn {
             background: rgba(16, 185, 129, 0.25);
             backdrop-filter: blur(10px);
@@ -174,15 +193,15 @@ const Login = ({ setIsLoggedIn }) => {
             <div className="form-group animate-item-2" style={{ position: 'relative' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Username</label>
               <div style={{ position: 'relative' }}>
-                <User size={18} color="#7f8ea3" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+                <User size={18} color="#ffffff" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input 
                   type="text" 
+                  className="glass-input"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter username" 
                   required 
                   disabled={isLoading}
-                  style={{ width: '100%', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'inherit', padding: '12px 12px 12px 40px' }}
                 />
               </div>
             </div>
@@ -190,15 +209,15 @@ const Login = ({ setIsLoggedIn }) => {
             <div className="form-group animate-item-3" style={{ position: 'relative' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: '500', color: '#fff' }}>Password</label>
               <div style={{ position: 'relative' }}>
-                <Lock size={18} color="#7f8ea3" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+                <Lock size={18} color="#ffffff" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input 
                   type="password" 
+                  className="glass-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password" 
                   required 
                   disabled={isLoading}
-                  style={{ width: '100%', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'inherit', padding: '12px 12px 12px 40px' }}
                 />
               </div>
             </div>
