@@ -40,7 +40,7 @@
   --glass-shadow-outer: rgba(0, 0, 0, 0.15);
   --glass-highlight: rgba(255, 255, 255, 0.7);
   --glass-shadow-inner: rgba(0, 0, 0, 0.1);
-  --watermark-opacity: 0.2;
+  --watermark-opacity: 0.5;
   --active-text: #0f172a;
   --active-text-glow: rgba(0, 0, 0, 0.25);
 }
