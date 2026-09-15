@@ -475,13 +475,13 @@ body::before {
 }
 
 .rank-badge {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: white;
 }
@@ -492,8 +492,8 @@ body::before {
 .rank-other { background: rgba(255,255,255,0.05); color: var(--text-secondary); }
 
 .avatar {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 2.2rem;
+  height: 2.2rem;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.05);
   display: flex;
@@ -501,16 +501,21 @@ body::before {
   justify-content: center;
   color: var(--text-secondary);
 }
+.avatar svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
 
 .list-text {
   flex: 1;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: var(--text-primary);
+  font-weight: 500;
 }
 
 .list-value {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   white-space: nowrap;
 }
 .list-value.positive {
