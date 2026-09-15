@@ -188,13 +188,7 @@ const Login = ({ setIsLoggedIn }) => {
       </style>
       <div className="auth-container">
         <div className="glass-card auth-card" style={{ maxWidth: '24rem', padding: '3rem 2.5rem' }}>
-          <div className="animate-item-1" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <img 
-              src="/serashop.png" 
-              alt="SERAMC Logo" 
-              style={{ width: '280px', height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))' }} 
-            />
-          </div>
+          {/* Logo has been removed as requested */}
           
           {error && (
             <div style={{ 
