@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
@@ -94,6 +95,14 @@ app.get('/api/top-buyers', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// Catch-all route for React Router
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.listen(port, () => {
