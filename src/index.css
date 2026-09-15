@@ -284,7 +284,7 @@ body::before {
 .summary-icon.red, .small-icon.red { background: transparent; color: var(--accent-red); }
 
 .card-value {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-top: 0.5rem;
@@ -295,7 +295,7 @@ body::before {
 }
 
 .card-value .decimal {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--text-secondary);
   font-weight: 500;
 }
