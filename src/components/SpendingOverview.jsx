@@ -90,7 +90,7 @@ const SpendingOverview = ({ monthlyData, month = 'Jan' }) => {
   };
 
   return (
-    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="section-header" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '0.1rem' }}>
