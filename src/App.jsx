@@ -6,7 +6,7 @@ import LineChart from './components/LineChart'
 import QuickActions from './components/QuickActions'
 import TopBuyer from './components/TopBuyer'
 import PnLStatement from './components/PnLStatement'
-import RecentExpenses from './components/RecentExpenses'
+import RecentActivity from './components/RecentActivity'
 import Login from './pages/Login'
 
 const monthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -120,7 +120,7 @@ function Dashboard() {
       <div className="bottom-section">
         <TopBuyer />
         <PnLStatement monthlyData={monthlyDataStore[selectedMonth]} month={selectedMonth} />
-        <RecentExpenses 
+        <RecentActivity 
           transactions={transactions} 
           selectedMonth={selectedMonth}
           onUpdate={(id, updatedTxn) => setTransactions(transactions.map(t => t.id === id ? updatedTxn : t))}
