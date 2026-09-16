@@ -83,11 +83,9 @@ app.get('/api/top-buyers', async (req, res) => {
     const { limit } = req.query;
     const limitClause = limit === 'all' ? '' : 'LIMIT 10';
     const [rows] = await pool.query(`
-      SELECT u.ign as name, SUM(o.totalAmount) as value
-      FROM seramc_db.\`Order\` o
-      JOIN seramc_db.\`User\` u ON o.userId = u.id
-      WHERE o.status = 'PAID'
-      GROUP BY u.ign
+      SELECT name, SUM(amount) as value
+      FROM incomes
+      GROUP BY name
       ORDER BY value DESC
       ${limitClause}
     `);
