@@ -11,7 +11,8 @@ const TopBuyer = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetch('/api/top-buyers')
+    const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+    fetch(`${apiBase}/api/top-buyers`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -35,7 +36,9 @@ const TopBuyer = () => {
     setShowModal(true);
     setSearchTerm(''); // Reset search when opening
     setIsLoadingAll(true);
-    fetch('/api/top-buyers?limit=all')
+    
+    const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+    fetch(`${apiBase}/api/top-buyers?limit=all`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
